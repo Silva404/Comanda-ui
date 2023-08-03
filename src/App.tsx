@@ -6,30 +6,30 @@ import { useForm } from 'react-hook-form'
 function Header() {
   return (
     <div className="flex items-center gap-6 bg-[#343a40] p-4">
-      <a
-        href="/"
+      <Link
+        to="/"
         className="mr-4 text-2xl font-semibold tracking-tight text-white"
       >
         Comanda Fácil
-      </a>
-      <a
-        href="/open-tab"
+      </Link>
+      <Link
+        to="/open-tab"
         className="cursor-pointer scroll-m-20 text-base font-semibold tracking-tight text-white/75 hover:text-white/90"
       >
         Abrir comanda
-      </a>
-      <a
-        href="/kitchen"
+      </Link>
+      <Link
+        to="/kitchen"
         className="cursor-pointer  scroll-m-20 text-base font-semibold tracking-tight text-white/75 hover:text-white/90"
       >
         Cozinha
-      </a>
-      <a
-        href="/menu"
+      </Link>{' '}
+      <Link
+        to="/menu"
         className="cursor-pointer  scroll-m-20 text-base font-semibold tracking-tight text-white/75 hover:text-white/90"
       >
         Cardapio
-      </a>
+      </Link>
     </div>
   )
 }

@@ -18,12 +18,14 @@
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "axios": "^1.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.262.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.2",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.14.2",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
@@ -52,6 +54,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tailwindcss": "^3.12.1",
     "happy-dom": "^9.20.3",
+    "msw": "^1.2.3",
     "postcss": "^8.4.24",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.4.1",
@@ -60,5 +63,8 @@
     "vite": "^4.3.9",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.32.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
