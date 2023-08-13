@@ -34,46 +34,6 @@ function Header() {
   )
 }
 
-const comandas = [
-  {
-    number: 1,
-    clients: [
-      { name: 'Danielzim da feirinha', time: 'Aberta há 1 hora' },
-      { name: 'Breno', time: 'Aberta há 1 hora' }
-    ]
-  },
-  {
-    number: 98,
-    clients: [{ name: 'Danielzim da feirinha', time: 'Aberta há 1 hora' }]
-  },
-  { number: 25, clients: [{ name: 'Breno', time: 'Aberta há 1 hora' }] }
-]
-
-export function OpenTabs() {
-  return (
-    <div className="mx-auto w-11/12 py-6">
-      <h2 className="scroll-m-20 pb-4 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-        Comandas abertas
-      </h2>
-      <div className="flex gap-3">
-        {comandas.map((comanda) => (
-          <div
-            className="flex max-w-[180px] flex-col items-center rounded border border-black/50 p-4 hover:ring"
-            key={comanda.number}
-          >
-            <h1 className="mb-4 text-4xl">{comanda.number}</h1>
-            {comanda.clients.map((client) => (
-              <p key={client.name}>
-                {client.name} - {client.time}
-              </p>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 const formSchema = z.object({
   client_name: z.string().min(2, {
     message: 'Username must be at least 2 characters.'
@@ -182,7 +142,10 @@ function App() {
   return (
     <div className="relative overflow-hidden bg-white antialiased">
       <Header />
-      <Outlet />
+
+      <div className="mx-auto w-11/12 py-8">
+        <Outlet />
+      </div>
     </div>
   )
 }

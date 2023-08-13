@@ -3,11 +3,11 @@ import { VariantProps, cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
 
-export const typographyVariants = cva('text-foreground', {
+export const typographies = cva('text-foreground', {
   variants: {
     as: {
       h1: 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl',
-      h2: 'scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0',
+      h2: 'scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0',
       h3: 'scroll-m-20 text-2xl font-semibold tracking-tight',
       h4: 'scroll-m-20 text-xl font-semibold tracking-tight',
       h5: 'scroll-m-20 text-lg font-semibold tracking-tight',
@@ -29,7 +29,7 @@ type Element = keyof JSX.IntrinsicElements
 
 type TypographyProps<T extends Element> = {
   element: T
-} & VariantProps<typeof typographyVariants> &
+} & VariantProps<typeof typographies> &
   React.HTMLAttributes<HTMLElement>
 
 export const Typography = <T extends Element>({
@@ -41,7 +41,7 @@ export const Typography = <T extends Element>({
   const Component = 'h1'
 
   const componentProps = {
-    className: cn(typographyVariants({ as, className })),
+    className: cn(typographies({ as, className })),
     ...props
   }
 

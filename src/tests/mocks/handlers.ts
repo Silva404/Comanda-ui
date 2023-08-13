@@ -1,7 +1,44 @@
 import { categories } from '@/features/menu/mocks'
+import { Items, Tables } from '@/features/tab/types'
 import { rest } from 'msw'
 
+const timestamp = new Date().toLocaleDateString('pt-BR')
+const items: Items = [
+  { name: 'Coca zero', note: 'Com limao e gelo', menuNumber: 3 },
+  { name: 'Agua', note: 'Com limao e gelo', menuNumber: 4 }
+]
+const copy = { timestamp, items }
+
+const openTables: Tables = [
+  {
+    number: 1,
+    tabs: [
+      { id: 'random-1', name: 'Danielzim da feirinha', ...copy },
+      { id: 'random-2', name: 'Breno', ...copy }
+    ]
+  },
+  {
+    number: 98,
+    tabs: [{ id: 'random-3', name: 'Danielzim da feirinha', ...copy }]
+  },
+  {
+    number: 25,
+    tabs: [{ id: 'random-4', name: 'Breno', ...copy }]
+  }
+]
+
 export const handlers = [
+  rest.get('/:restaurant/tabs/open', (_, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(500), ctx.json(openTables))
+  }),
+  rest.get('/:restaurant/tabs/:tableId/:tabId', (req, res, ctx) => {
+    const table = openTables.filter(
+      (table) => String(table.number) === req.params.tableId
+    )
+    const tab = table[0].tabs.filter((tab) => tab.id === req.params.tabId)[0]
+
+    return res(ctx.status(200), ctx.delay(500), ctx.json(tab))
+  }),
   rest.post('/:restaurant/menu/create-category', (_, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1000), ctx.json({}))
   }),
@@ -11,7 +48,7 @@ export const handlers = [
   rest.post('/:restaurant/menu/category/:id/create-item', (_, res, ctx) => {
     return res(ctx.status(200), ctx.delay(2000), ctx.json({}))
   }),
-  rest.get('/:restaurant/menu/categories', (req, res, ctx) => {
+  rest.get('/:restaurant/menu/categories', (_, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1000), ctx.json(categories))
   })
 ]
