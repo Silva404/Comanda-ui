@@ -1,4 +1,5 @@
 import { Spinner } from '@/components/spinner'
+import { Toaster } from '@/components/toast'
 import { cn } from '@/lib/utils'
 import { Suspense } from 'react'
 import { Link, Outlet, useNavigation } from 'react-router-dom'
@@ -31,20 +32,23 @@ function Header() {
 function Root() {
   const navigation = useNavigation()
   return (
-    <div className="relative overflow-hidden bg-white antialiased">
-      <Header />
+    <>
+      <div className="relative overflow-hidden bg-white antialiased">
+        <Header />
 
-      <div
-        className={cn(
-          'mx-auto w-11/12 py-8',
-          navigation.state === 'loading'
-            ? 'opacity-50 transition-opacity duration-1000'
-            : ''
-        )}
-      >
-        <Outlet />
+        <div
+          className={cn(
+            'mx-auto w-11/12 py-8',
+            navigation.state === 'loading'
+              ? 'opacity-50 transition-opacity duration-1000'
+              : ''
+          )}
+        >
+          <Outlet />
+        </div>
       </div>
-    </div>
+      <Toaster />
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import { useLoaderData, useParams } from 'react-router-dom'
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import { Tab as TabType } from './types'
 import { Button } from '@/components/button'
 import { typographies } from '@/components/typography'
@@ -28,6 +28,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Spinner } from '@/components/spinner'
 import { useMutation } from 'react-query'
+import { useToast } from '@/components/use-toast'
 
 const CancelItemSchema = z.object({
   restaurant: z.string().optional(),
@@ -41,12 +42,21 @@ export function Tab() {
   const restaurant = 'lamercan'
   const { tabId } = useParams()
   const tab = useLoaderData() as TabType
+  const { toast } = useToast()
+  const navigate = useNavigate()
+
   const [isDialogOpen, setDialogOpen] = useState(false)
   const form = useForm<CancelItem>()
   const mutation = useMutation({
     mutationFn: (data: Omit<CancelItem, 'itemId'>) =>
       closeTab(data.restaurant!, data.tabId),
-    onSuccess: () => setDialogOpen(false)
+    onSuccess: () => {
+      toast({
+        title: 'Comanda cancelada'
+      })
+      navigate('/')
+      setDialogOpen(false)
+    }
   })
   return (
     <div className="flex flex-col gap-4">
