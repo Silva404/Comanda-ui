@@ -39,7 +39,12 @@ export function OpenTabs() {
             className="flex flex-col gap-2 rounded-xl border bg-card p-4 text-card-foreground shadow"
             key={table.number}
           >
-            <h4 className={cn(typographies({ as: 'inlineCode' }), 'text-2xl')}>
+            <h4
+              className={cn(
+                typographies({ as: 'inlineCode' }),
+                'w-fit text-2xl'
+              )}
+            >
               Mesa #{table.number}
             </h4>
             <p className={typographies({ as: 'h4' })}>Comandas: </p>

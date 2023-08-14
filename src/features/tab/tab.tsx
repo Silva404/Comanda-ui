@@ -32,12 +32,12 @@ export function Tab() {
           </span>
         </h2>
 
-        <div className="flex w-full items-center gap-2">
-          <Button variant="outline" className="flex w-full gap-2">
+        <div className="flex w-full items-center gap-2 md:w-fit">
+          <Button variant="outline" className="flex w-full gap-2 md:w-fit">
             <Cross1Icon />
             Fechar comanda
           </Button>
-          <Button className="flex w-full gap-2">
+          <Button className="flex w-full gap-2 md:w-fit">
             <PlusIcon />
             Adicionar item
           </Button>
