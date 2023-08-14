@@ -10,6 +10,7 @@ import {
 } from '@/components/dialog'
 import { typographies } from '@/components/typography'
 import { PlusIcon } from '@radix-ui/react-icons'
+import { cn } from '@/lib/utils'
 
 export function OpenTabs() {
   const openTables = useLoaderData() as Tables
@@ -38,7 +39,9 @@ export function OpenTabs() {
             className="flex flex-col gap-2 rounded-xl border bg-card p-4 text-card-foreground shadow"
             key={table.number}
           >
-            <h4 className={typographies({ as: 'h3' })}>Mesa #{table.number}</h4>
+            <h4 className={cn(typographies({ as: 'inlineCode' }), 'text-2xl')}>
+              Mesa #{table.number}
+            </h4>
             <p className={typographies({ as: 'h4' })}>Comandas: </p>
             {table.tabs.map((tab) => (
               <p className={typographies({ as: 'lead' })} key={tab.name}>

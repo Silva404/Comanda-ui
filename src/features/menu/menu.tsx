@@ -169,7 +169,12 @@ export function Menu() {
         </div>
         <NewCategoryDialog close={() => setCategoryDialogOpen(false)} />
       </Dialog>
-      {categories.isLoading && <Spinner />}
+      {categories.isLoading && (
+        <div className="flex items-center justify-center py-10">
+          <Spinner />
+        </div>
+      )}
+
       {categories.isError && <div> ERRORR </div>}
       {categories.data && (
         <Accordion type="single" collapsible>

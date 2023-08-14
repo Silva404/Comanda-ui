@@ -10,17 +10,37 @@ import {
   TableHeader,
   TableRow
 } from '@/components/table'
+import { cn } from '@/lib/utils'
+import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons'
 
 export function Tab() {
   const tab = useLoaderData() as TabType
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className={typographies({ as: 'h2' })}>Comanda mesa #{tab.id}</h2>
+      <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
+        <h2 className={typographies({ as: 'h2' })}>
+          Comanda da mesa{' '}
+          <span
+            className={cn(
+              typographies({
+                as: 'inlineCode'
+              }),
+              'text-2xl'
+            )}
+          >
+            #{tab.id}
+          </span>
+        </h2>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline">Fechar mesa</Button>
-          <Button>Adicionar item</Button>
+        <div className="flex w-full items-center gap-2">
+          <Button variant="outline" className="flex w-full gap-2">
+            <Cross1Icon />
+            Fechar comanda
+          </Button>
+          <Button className="flex w-full gap-2">
+            <PlusIcon />
+            Adicionar item
+          </Button>
         </div>
       </div>
       <div className="flex flex-col gap-8">
@@ -46,7 +66,7 @@ export function Tab() {
                     <Button>Servir</Button>
                   </TableCell>
                   <TableCell>
-                    <Button>Cancelar</Button>
+                    <Button variant="secondary">Cancelar</Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -70,7 +90,7 @@ export function Tab() {
                   <TableCell>{item.menuNumber}</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>
-                    <Button>Cancelar</Button>
+                    <Button variant="secondary">Cancelar</Button>
                   </TableCell>
                 </TableRow>
               ))}
