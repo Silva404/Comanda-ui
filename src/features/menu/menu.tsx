@@ -27,6 +27,7 @@ import {
 } from './api/create-menu-item'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Spinner } from '@/components/spinner'
+import { typographies } from '@/components/typography'
 
 export function Menu() {
   const [categoryDialogOpen, setCategoryDialogOpen] = useState(false)
@@ -160,9 +161,7 @@ export function Menu() {
     <div>
       <Dialog open={categoryDialogOpen} onOpenChange={setCategoryDialogOpen}>
         <div className="flex items-center justify-between">
-          <h1 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
-            Cardapio
-          </h1>
+          <h1 className={typographies({ as: 'h2' })}>Cardapio</h1>
           <DialogTrigger asChild>
             <Button variant="outline">Nova Categoria</Button>
           </DialogTrigger>
