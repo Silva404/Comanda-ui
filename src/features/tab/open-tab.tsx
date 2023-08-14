@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { Waiters } from './types'
@@ -7,6 +7,14 @@ import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { Alert, AlertTitle } from '@/components/alert'
 import { ReactNode, useEffect } from 'react'
 import { useOpenTab } from './api/open-tab'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/select'
+import { Spinner } from '@/components/spinner'
 
 const formSchema = z.object({
   client_name: z.string().min(3, {
@@ -98,18 +106,24 @@ export function OpenTab() {
           >
             Garcom
           </label>
-          <select
-            {...form.register('waiter', { required: true })}
-            id="waiter"
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          >
-            <option selected value="">
-              Selecione um garcom
-            </option>
-            {waiters.map((waiter) => (
-              <option key={waiter.id}>{waiter.name}</option>
-            ))}
-          </select>
+          <Controller
+            control={form.control}
+            name="waiter"
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione um garcom" />
+                </SelectTrigger>
+                <SelectContent>
+                  {waiters.map((waiter) => (
+                    <SelectItem key={waiter.name} value={waiter.name}>
+                      {waiter.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
           {form.formState.errors.waiter && (
             <ErrorMessage>{form.formState.errors.waiter.message}</ErrorMessage>
           )}
@@ -117,9 +131,9 @@ export function OpenTab() {
         <button
           type="submit"
           disabled={openTab.isLoading}
-          className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
         >
-          Abrir comanda
+          {!openTab.isLoading && <Spinner className="h-4" />} Abrir comanda
         </button>
       </div>
     </form>
