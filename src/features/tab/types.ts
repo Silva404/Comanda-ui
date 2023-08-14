@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 const ItemSchema = z.array(
   z.object({
+    id: z.string().min(1),
     name: z.string().min(3),
     note: z.string().min(5),
     menuNumber: z.number().min(1).nonnegative()

@@ -4,8 +4,8 @@ import { rest } from 'msw'
 
 const timestamp = 'Aberto ha 2 horas'
 const items: Items = [
-  { name: 'Coca zero', note: 'Com limao e gelo', menuNumber: 3 },
-  { name: 'Agua', note: 'Com limao e gelo', menuNumber: 4 }
+  { name: 'Coca zero', note: 'Com limao e gelo', menuNumber: 3, id: '121212' },
+  { name: 'Agua', note: 'Com limao e gelo', menuNumber: 4, id: '432312121212' }
 ]
 const copy = { timestamp, items }
 
@@ -50,6 +50,9 @@ export const handlers = [
       ctx.delay(1000),
       ctx.json({ tableId: 98, tabId: 'random-3' })
     )
+  }),
+  rest.post('/:restaurant/tab/:tabId/close', (_, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(1000), ctx.json({}))
   }),
   rest.get('/:restaurant/waiters', (_, res, ctx) => {
     return res(ctx.status(200), ctx.delay(500), ctx.json(waiters))
