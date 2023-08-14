@@ -31,3 +31,8 @@ export type Tables = Table[]
 export type Tab = z.infer<typeof TabSchema>
 
 export type Items = z.infer<typeof ItemSchema>
+
+export type Waiters = {
+  name: string
+  id: number
+}[]

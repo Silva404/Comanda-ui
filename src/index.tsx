@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client'
 import 'tailwindcss/tailwind.css'
 import 'styles/global.css'
 import * as reactRouterDom from 'react-router-dom'
-import App, { OpenTab, PlaceOrder } from 'App'
+import App, { PlaceOrder } from 'App'
 import { Menu } from '@/features/menu/menu'
 import { QueryClientProvider } from 'react-query'
 import { queryClient } from './lib/react-query'
@@ -10,6 +10,9 @@ import { OpenTabs } from './features/tab/open-tabs'
 import { Tab } from './features/tab/tab'
 import { getTab } from './features/tab/api/get-tab'
 import { getOpenTabs } from './features/tab/api/get-open-tabs'
+import { OpenTab } from './features/tab/open-tab'
+import { getWaiters } from './features/tab/api/get-waiter'
+import { openTab } from './features/tab/api/open-tab'
 
 const restaurant = 'lamercan'
 const container = document.getElementById('root') as HTMLDivElement
@@ -21,10 +24,17 @@ const router = reactRouterDom.createBrowserRouter([
     errorElement: <h1> deu error!</h1>,
     children: [
       {
-        index: true,
+        path: '/',
         element: <OpenTabs />,
         loader: () => getOpenTabs(restaurant),
-        errorElement: <h1> deu error na home!</h1>
+        errorElement: <h1> deu error na home!</h1>,
+        children: [
+          {
+            path: '/',
+            element: <OpenTab />,
+            loader: () => getWaiters(restaurant)
+          }
+        ]
       },
       {
         path: 'tab/:tableId/:tabId',
@@ -33,11 +43,6 @@ const router = reactRouterDom.createBrowserRouter([
         loader: ({ params }) =>
           getTab(restaurant, params.tableId!, params.tabId!)
       },
-      {
-        path: 'open-tab',
-        element: <OpenTab />
-      },
-      { path: 'place-order', element: <PlaceOrder /> },
       { path: 'menu', element: <Menu /> }
     ]
   }

@@ -1,5 +1,5 @@
 import { categories } from '@/features/menu/mocks'
-import { Items, Tables } from '@/features/tab/types'
+import { Items, Tables, Waiters } from '@/features/tab/types'
 import { rest } from 'msw'
 
 const timestamp = new Date().toLocaleDateString('pt-BR')
@@ -8,6 +8,11 @@ const items: Items = [
   { name: 'Agua', note: 'Com limao e gelo', menuNumber: 4 }
 ]
 const copy = { timestamp, items }
+
+const waiters: Waiters = [
+  { name: 'Ronaldo', id: 1 },
+  { name: 'Wanessa', id: 2 }
+]
 
 const openTables: Tables = [
   {
@@ -38,6 +43,16 @@ export const handlers = [
     const tab = table[0].tabs.filter((tab) => tab.id === req.params.tabId)[0]
 
     return res(ctx.status(200), ctx.delay(500), ctx.json(tab))
+  }),
+  rest.post('/:restaurant/tabs/new', (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.delay(1000),
+      ctx.json({ tableId: 98, tabId: 'random-3' })
+    )
+  }),
+  rest.get('/:restaurant/waiters', (_, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(500), ctx.json(waiters))
   }),
   rest.post('/:restaurant/menu/create-category', (_, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1000), ctx.json({}))
