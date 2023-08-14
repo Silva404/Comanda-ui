@@ -1,4 +1,7 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Spinner } from '@/components/spinner'
+import { cn } from '@/lib/utils'
+import { Suspense } from 'react'
+import { Link, Outlet, useNavigation } from 'react-router-dom'
 
 function Header() {
   return (
@@ -26,11 +29,19 @@ function Header() {
 }
 
 function Root() {
+  const navigation = useNavigation()
   return (
     <div className="relative overflow-hidden bg-white antialiased">
       <Header />
 
-      <div className="mx-auto w-11/12 py-8">
+      <div
+        className={cn(
+          'mx-auto w-11/12 py-8',
+          navigation.state === 'loading'
+            ? 'opacity-50 transition-opacity duration-1000'
+            : ''
+        )}
+      >
         <Outlet />
       </div>
     </div>
