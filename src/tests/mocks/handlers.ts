@@ -2,7 +2,7 @@ import { categories } from '@/features/menu/mocks'
 import { Items, Tables, Waiters } from '@/features/tab/types'
 import { rest } from 'msw'
 
-const timestamp = new Date().toLocaleDateString('pt-BR')
+const timestamp = 'Aberto ha 2 horas'
 const items: Items = [
   { name: 'Coca zero', note: 'Com limao e gelo', menuNumber: 3 },
   { name: 'Agua', note: 'Com limao e gelo', menuNumber: 4 }

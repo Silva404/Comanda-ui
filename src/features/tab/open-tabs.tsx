@@ -8,6 +8,8 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/dialog'
+import { typographies } from '@/components/typography'
+import { PlusIcon } from '@radix-ui/react-icons'
 
 export function OpenTabs() {
   const openTables = useLoaderData() as Tables
@@ -25,26 +27,27 @@ export function OpenTabs() {
       </Dialog>
 
       <div className="mb-8 flex items-center justify-between">
-        <h2 className="scroll-m-20 pb-4 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-          Comandas abertas
-        </h2>
-        <Button onClick={() => setModalIsOpen(true)}>Nova comanda</Button>
+        <h2 className={typographies({ as: 'h2' })}>Comandas abertas</h2>
+        <Button onClick={() => setModalIsOpen(true)} className="flex gap-2">
+          <PlusIcon /> <span className="hidden md:block">Nova comanda</span>
+        </Button>
       </div>
-      <div className="flex gap-3">
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]  gap-3">
         {openTables.map((table) => (
           <div
-            className="flex max-w-[180px] flex-col items-center rounded border border-black/50 p-4"
+            className="flex flex-col gap-2 rounded-xl border bg-card p-4 text-card-foreground shadow"
             key={table.number}
           >
-            <h1 className="mb-4 text-4xl">{table.number}</h1>
+            <h4 className={typographies({ as: 'h3' })}>Mesa #{table.number}</h4>
+            <p className={typographies({ as: 'h4' })}>Comandas: </p>
             {table.tabs.map((tab) => (
-              <p key={tab.name}>
+              <p className={typographies({ as: 'lead' })} key={tab.name}>
                 <Link
                   to={`/tab/${table.number}/${tab.id}`}
                   className="text-blue-700 underline hover:text-blue-600"
                 >
                   {tab.name}
-                </Link>
+                </Link>{' '}
                 - {tab.timestamp}
               </p>
             ))}

@@ -10,12 +10,6 @@ function Header() {
         Comanda Fácil
       </Link>
       <Link
-        to="/open-tab"
-        className="cursor-pointer scroll-m-20 text-base font-semibold tracking-tight text-white/75 hover:text-white/90"
-      >
-        Abrir comanda
-      </Link>
-      <Link
         to="/kitchen"
         className="cursor-pointer  scroll-m-20 text-base font-semibold tracking-tight text-white/75 hover:text-white/90"
       >
