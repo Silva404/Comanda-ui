@@ -15,7 +15,6 @@ import {
 } from '@/components/dialog'
 import { NewCategoryDialog } from './components/new-category-dialog'
 import { useState } from 'react'
-import { useMenuCategories } from './api/get-categories'
 import { Label } from '@/components/label'
 import { Input } from '@/components/input'
 import { useForm } from 'react-hook-form'
@@ -26,13 +25,14 @@ import {
   useCreateMenuItem
 } from './api/create-menu-item'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Spinner } from '@/components/spinner'
 import { typographies } from '@/components/typography'
+import { useLoaderData } from 'react-router-dom'
+import { Categories } from './types'
 
 export function Menu() {
   const [categoryDialogOpen, setCategoryDialogOpen] = useState(false)
   const restaurant = 'lamercan'
-  const categories = useMenuCategories(restaurant)
+  const categories = useLoaderData() as Categories
   const createItem = useCreateMenuItem()
   const itemForm = useForm<MenuItem>({
     resolver: zodResolver(menuItemSchema)
@@ -168,16 +168,9 @@ export function Menu() {
         </div>
         <NewCategoryDialog close={() => setCategoryDialogOpen(false)} />
       </Dialog>
-      {categories.isLoading && (
-        <div className="flex items-center justify-center py-10">
-          <Spinner />
-        </div>
-      )}
-
-      {categories.isError && <div> ERRORR </div>}
-      {categories.data && (
+      {categories && (
         <Accordion type="single" collapsible>
-          {categories.data.map((category) => (
+          {categories.map((category) => (
             <AccordionItem key={category.id} value={category.id}>
               <AccordionTrigger className="rounded px-2 hover:bg-black/5">
                 {category.name}

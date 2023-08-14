@@ -12,6 +12,7 @@ import { getTab } from './features/tab/api/get-tab'
 import { getOpenTabs } from './features/tab/api/get-open-tabs'
 import { OpenTab } from './features/tab/open-tab'
 import { getWaiters } from './features/tab/api/get-waiter'
+import { getMenuCategories } from './features/menu/api/get-categories'
 
 const restaurant = 'lamercan'
 const container = document.getElementById('root') as HTMLDivElement
@@ -42,7 +43,11 @@ const router = reactRouterDom.createBrowserRouter([
         loader: ({ params }) =>
           getTab(restaurant, params.tableId!, params.tabId!)
       },
-      { path: 'menu', element: <Menu /> }
+      {
+        path: 'menu',
+        element: <Menu />,
+        loader: () => getMenuCategories(restaurant)
+      }
     ]
   }
 ])
