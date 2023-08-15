@@ -51,7 +51,7 @@ export const handlers = [
       ctx.json({ tableId: 98, tabId: 'random-3' })
     )
   }),
-  rest.post('/:restaurant/tabs/:tabId/item/:itemId/close', (_, res, ctx) => {
+  rest.post('/:restaurant/tab/:tabId/close', (_, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1000), ctx.json({}))
   }),
   rest.post('/:restaurant/tabs/:tabId/item/:itemId/cancel', (_, res, ctx) => {
