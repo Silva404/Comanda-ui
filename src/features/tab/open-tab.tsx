@@ -54,9 +54,7 @@ export function OpenTab() {
 
   useEffect(() => {
     if (openTab.isSuccess) {
-      navigate(
-        `${restaurant}/tab/${openTab.data.tableId}/${openTab.data.tabId}`
-      )
+      navigate(`/tab/${openTab.data.tableId}/${openTab.data.tabId}`)
     }
   }, [openTab.isSuccess])
 
@@ -68,7 +66,7 @@ export function OpenTab() {
             htmlFor="tab_number"
             className="block text-sm font-medium text-black"
           >
-            Numero da comanda
+            Numero da mesa
           </label>
           <input
             {...form.register('tab_number', { required: true })}
