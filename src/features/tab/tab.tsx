@@ -22,13 +22,14 @@ import {
 } from '@/components/alert-dialog'
 import { cn } from '@/lib/utils'
 import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { closeTab } from './api/close-tab'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Spinner } from '@/components/spinner'
 import { useMutation } from 'react-query'
 import { useToast } from '@/components/use-toast'
+import { cancelItem } from './api/cancel-item'
 
 const CancelItemSchema = z.object({
   restaurant: z.string().optional(),
@@ -44,20 +45,28 @@ export function Tab() {
   const tab = useLoaderData() as TabType
   const { toast } = useToast()
   const navigate = useNavigate()
+  const closeTabForm = useForm<CancelItem>()
+  const cancelItemForm = useForm<CancelItem>()
 
-  const [isDialogOpen, setDialogOpen] = useState(false)
-  const form = useForm<CancelItem>()
+  const [closeTabDialog, setCloseTabDialog] = useState(false)
+  const [cancelItemDialog, setCancelItemDialog] = useState(false)
   const mutation = useMutation({
     mutationFn: (data: Omit<CancelItem, 'itemId'>) =>
       closeTab(data.restaurant!, data.tabId),
     onSuccess: () => {
-      toast({
-        title: 'Comanda cancelada'
-      })
+      toast({ title: 'Comanda cancelada' })
       navigate('/')
-      setDialogOpen(false)
     }
   })
+  const cancelItemMutation = useMutation({
+    mutationFn: (data: CancelItem) =>
+      cancelItem(data.restaurant!, data.tabId, data.itemId),
+    onSuccess: () => {
+      toast({ title: 'Item cancelado com sucesso' })
+      setCancelItemDialog(false)
+    }
+  })
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
@@ -74,18 +83,16 @@ export function Tab() {
             #{tab.id}
           </span>
         </h2>
-
         <div className="flex w-full items-center gap-2 md:w-fit">
-          <AlertDialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+          <AlertDialog open={closeTabDialog} onOpenChange={setCloseTabDialog}>
             <AlertDialogTrigger asChild>
               <Button variant="outline" className="flex w-full gap-2 md:w-fit">
-                <Cross1Icon />
                 Fechar comanda
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <form
-                onSubmit={form.handleSubmit(() =>
+                onSubmit={closeTabForm.handleSubmit(() =>
                   mutation.mutate({ restaurant, tabId: tab.id })
                 )}
               >
@@ -120,7 +127,7 @@ export function Tab() {
           <h3
             className={typographies({
               as: 'h3',
-              className: 'mb-4 w-fit border-b'
+              className: 'mb-4'
             })}
           >
             Items à servir
@@ -145,7 +152,50 @@ export function Tab() {
                     <Button>Servir</Button>
                   </TableCell>
                   <TableCell>
-                    <Button variant="secondary">Cancelar</Button>
+                    <AlertDialog
+                      open={cancelItemDialog}
+                      onOpenChange={setCancelItemDialog}
+                    >
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="flex w-full gap-2 md:w-fit"
+                        >
+                          Cancelar
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <form
+                          onSubmit={cancelItemForm.handleSubmit(() =>
+                            cancelItemMutation.mutate({
+                              restaurant,
+                              tabId: tab.id,
+                              itemId: item.id
+                            })
+                          )}
+                        >
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Voce tem certeza?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Essa acao nao pode ser desfeita, voce perdera o
+                              historico dessa comanda.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <Button type="submit">
+                              {cancelItemMutation.isLoading ? (
+                                <Spinner className="h-4 fill-black/50" />
+                              ) : (
+                                'Continuar'
+                              )}
+                            </Button>
+                          </AlertDialogFooter>
+                        </form>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               ))}
@@ -157,7 +207,7 @@ export function Tab() {
           <h3
             className={typographies({
               as: 'h3',
-              className: 'mb-4 w-fit border-b'
+              className: 'mb-4'
             })}
           >
             Items em preparo
@@ -176,7 +226,47 @@ export function Tab() {
                   <TableCell>{item.menuNumber}</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>
-                    <Button variant="secondary">Cancelar</Button>
+                    <AlertDialog
+                      open={cancelItemDialog}
+                      onOpenChange={setCancelItemDialog}
+                    >
+                      <AlertDialogTrigger asChild>
+                        <Button variant="outline" className="flex gap-2">
+                          Cancelar
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <form
+                          onSubmit={cancelItemForm.handleSubmit(() =>
+                            cancelItemMutation.mutate({
+                              restaurant,
+                              tabId: tab.id,
+                              itemId: item.id
+                            })
+                          )}
+                        >
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Voce tem certeza?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Essa acao nao pode ser desfeita, voce perdera o
+                              historico dessa comanda.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <Button type="submit">
+                              {cancelItemMutation.isLoading ? (
+                                <Spinner className="h-4 fill-black/50" />
+                              ) : (
+                                'Continuar'
+                              )}
+                            </Button>
+                          </AlertDialogFooter>
+                        </form>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               ))}
