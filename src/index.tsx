@@ -13,6 +13,7 @@ import { getOpenTabs } from './features/tab/api/get-open-tabs'
 import { OpenTab } from './features/tab/open-tab'
 import { getWaiters } from './features/tab/api/get-waiter'
 import { getMenuCategories } from './features/menu/api/get-categories'
+import { ErrorPage } from './components/error-page'
 
 const restaurant = 'lamercan'
 const container = document.getElementById('root') as HTMLDivElement
@@ -21,13 +22,13 @@ const router = reactRouterDom.createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    errorElement: <h1> deu error!</h1>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
         element: <OpenTabs />,
         loader: () => getOpenTabs(restaurant),
-        errorElement: <h1> deu error na home!</h1>,
+        errorElement: <ErrorPage />,
         children: [
           {
             path: '/',
