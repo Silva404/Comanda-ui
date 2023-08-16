@@ -14,6 +14,8 @@ import { OpenTab } from './features/tab/open-tab'
 import { getWaiters } from './features/tab/api/get-waiter'
 import { getMenuCategories } from './features/menu/api/get-categories'
 import { ErrorPage } from './components/error-page'
+import { getItemsToPrepare } from './features/kitchen/api/getItemsToPrepare'
+import { Kitchen } from './features/kitchen/kitchen'
 
 const restaurant = 'lamercan'
 const container = document.getElementById('root') as HTMLDivElement
@@ -43,6 +45,11 @@ const router = reactRouterDom.createBrowserRouter([
         errorElement: <h1> deu erro na tab!</h1>,
         loader: ({ params }) =>
           getTab(restaurant, params.tableId!, params.tabId!)
+      },
+      {
+        path: 'kitchen',
+        element: <Kitchen />,
+        loader: () => getItemsToPrepare(restaurant)
       },
       {
         path: 'menu',
