@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Tab as TabType } from './types'
 import { Button } from '@/components/button'
 import { typographies } from '@/components/typography'
@@ -21,8 +21,8 @@ import {
   AlertDialogTrigger
 } from '@/components/alert-dialog'
 import { cn } from '@/lib/utils'
-import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons'
-import { useEffect, useState } from 'react'
+import { PlusIcon } from '@radix-ui/react-icons'
+import { useState } from 'react'
 import { closeTab } from './api/close-tab'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -30,6 +30,14 @@ import { Spinner } from '@/components/spinner'
 import { useMutation } from 'react-query'
 import { useToast } from '@/components/use-toast'
 import { cancelItem } from './api/cancel-item'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from '@/components/dialog'
+import { DialogTrigger } from '@radix-ui/react-dialog'
+import { OrderItemForm } from './order-item'
 
 const CancelItemSchema = z.object({
   restaurant: z.string().optional(),
@@ -41,13 +49,13 @@ type CancelItem = z.infer<typeof CancelItemSchema>
 
 export function Tab() {
   const restaurant = 'lamercan'
-  const { tabId } = useParams()
   const tab = useLoaderData() as TabType
   const { toast } = useToast()
   const navigate = useNavigate()
   const closeTabForm = useForm<CancelItem>()
   const cancelItemForm = useForm<CancelItem>()
 
+  const [addItemDialog, setAddItemDialog] = useState(false)
   const [closeTabDialog, setCloseTabDialog] = useState(false)
   const [cancelItemDialog, setCancelItemDialog] = useState(false)
   const mutation = useMutation({
@@ -116,10 +124,21 @@ export function Tab() {
               </form>
             </AlertDialogContent>
           </AlertDialog>
-          <Button className="flex w-full gap-2 md:w-fit">
-            <PlusIcon />
-            Adicionar item
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="flex w-full gap-2 md:w-fit">
+                <PlusIcon />
+                Adicionar item
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Novo item</DialogTitle>
+              </DialogHeader>
+
+              <OrderItemForm tabId={tab.id} />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       <div className="flex flex-col gap-8">
@@ -143,7 +162,7 @@ export function Tab() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {tab.items.map((item) => (
+              {tab.menu.map((item) => (
                 <TableRow>
                   <TableCell>{item.menuNumber}</TableCell>
                   <TableCell>{item.name}</TableCell>
@@ -221,7 +240,7 @@ export function Tab() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {tab.items.map((item) => (
+              {tab.menu.map((item) => (
                 <TableRow>
                   <TableCell>{item.menuNumber}</TableCell>
                   <TableCell>{item.name}</TableCell>

@@ -1,8 +1,40 @@
-import { Categories } from './types'
+import { Categories } from '@/features/menu/types'
+import { Items, Menu, Tables, Waiters } from '@/features/tab/types'
 
-export const categories: Categories = [
+export const timestamp = 'Aberto ha 2 horas'
+
+export const menu: Menu = [
+  { name: 'Coca zero', note: 'Com limao e gelo', menuNumber: 3, id: '121212' },
+  { name: 'Agua', note: 'Com limao e gelo', menuNumber: 4, id: '432312121212' }
+]
+const copy = { timestamp, menu }
+
+export const waiters: Waiters = [
+  { name: 'Ronaldo', id: 1 },
+  { name: 'Wanessa', id: 2 }
+]
+
+export const openTables: Tables = [
   {
-    id: '1',
+    number: 1,
+    tabs: [
+      { id: 'random-1', name: 'Danielzim da feirinha', ...copy },
+      { id: 'random-2', name: 'Breno', ...copy }
+    ]
+  },
+  {
+    number: 98,
+    tabs: [{ id: 'random-3', name: 'Danielzim da feirinha', ...copy }]
+  },
+  {
+    number: 25,
+    tabs: [{ id: 'random-4', name: 'Breno', ...copy }]
+  }
+]
+
+export const categoriesWithItems: Categories = [
+  {
+    id: '45',
     name: 'Vinhos',
     items: [
       {
@@ -28,12 +60,12 @@ export const categories: Categories = [
     ]
   },
   {
-    id: '2',
+    id: '2232424',
     name: 'Pao',
     items: [
       {
         id: '123',
-        name: 'Cachaca',
+        name: 'Coca cola',
         price: '85.3',
         currency: 'BRL',
         description:
@@ -43,7 +75,7 @@ export const categories: Categories = [
       },
       {
         id: '1234',
-        name: 'Cachaca 2 2 asuhaskjdhsa dsdashdasd eaea eaea eae ',
+        name: 'Pepsi',
         price: '85.3',
         currency: 'BRL',
         description:
@@ -54,3 +86,13 @@ export const categories: Categories = [
     ]
   }
 ]
+
+export const menuPerCategory: { [key: string]: any } = {}
+categoriesWithItems.forEach((item) => {
+  menuPerCategory[item.id] = item.items
+})
+
+export const categories = categoriesWithItems.map((category) => ({
+  name: category.name,
+  id: category.id
+}))

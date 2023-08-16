@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { Categories } from '../types'
 
 export const getMenuCategories = (restaurant: string): Promise<Categories> => {
-  return axios.get(`/${restaurant}/menu/categories`)
+  return axios.get(`/${restaurant}/menu/categories/items`)
 }
 
 export const useMenuCategories = (restaurant: string) => {

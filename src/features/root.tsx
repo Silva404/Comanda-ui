@@ -7,10 +7,7 @@ import { Link, Outlet, useNavigation } from 'react-router-dom'
 function Header() {
   return (
     <div className="flex items-center gap-6 bg-[#343a40] p-4">
-      <Link
-        to="/"
-        className="mr-4 text-2xl font-semibold tracking-tight text-white"
-      >
+      <Link to="/" className="text-2xl font-semibold tracking-tight text-white">
         Comanda Fácil
       </Link>
       <Link

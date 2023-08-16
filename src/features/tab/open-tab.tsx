@@ -15,6 +15,7 @@ import {
   SelectValue
 } from '@/components/select'
 import { Spinner } from '@/components/spinner'
+import { ErrorMessage } from '@/components/form/error-message'
 
 const formSchema = z.object({
   client_name: z.string().min(3, {
@@ -29,15 +30,6 @@ const formSchema = z.object({
 })
 
 export type TabForm = z.infer<typeof formSchema>
-
-function ErrorMessage({ children }: { children: ReactNode }) {
-  return (
-    <Alert variant="destructive">
-      <ExclamationTriangleIcon className="h-4 w-4" />
-      <AlertTitle>{children}</AlertTitle>
-    </Alert>
-  )
-}
 
 export function OpenTab() {
   const restaurant = 'lamercan'
