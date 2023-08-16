@@ -29,7 +29,7 @@ export function OpenTabs() {
         </DialogContent>
       </Dialog>
 
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-5 flex items-center justify-between">
         <h2 className={typographies({ as: 'h2' })}>Comandas abertas</h2>
         <Button onClick={() => setModalIsOpen(true)} className="flex gap-2">
           <PlusIcon /> <span className="hidden md:block">Nova comanda</span>
