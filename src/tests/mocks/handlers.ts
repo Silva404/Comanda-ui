@@ -59,5 +59,8 @@ export const handlers = [
   }),
   rest.get('/:restaurant/kitchen/items-to-prepare', (_, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1000), ctx.json(menu))
+  }),
+  rest.post('/:restaurant/menu/item/:itemId/prepared', (_, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(1000), ctx.json({}))
   })
 ]

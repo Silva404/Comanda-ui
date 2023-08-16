@@ -25,6 +25,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMarkItemAsPrepared } from './api/mark-item-as-served'
 import { z } from 'zod'
+import { toast } from '@/components/use-toast'
 
 const ItemPreparedSchema = z.object({ item_id: z.string() })
 
@@ -33,9 +34,13 @@ export type ItemPrepared = z.infer<typeof ItemPreparedSchema>
 export function Kitchen() {
   const restaurant = 'lamercan'
   const menu = useLoaderData() as Menu
-  const markItemAsPrepared = useMarkItemAsPrepared(restaurant)
-  const form = useForm<ItemPrepared>()
   const [alertDialog, setAlertDialog] = useState(false)
+  function itemIsPrepared() {
+    setAlertDialog(false)
+    toast({ title: 'Item is Prepared' })
+  }
+  const markItemAsPrepared = useMarkItemAsPrepared(restaurant, itemIsPrepared)
+  const form = useForm<ItemPrepared>()
 
   return (
     <div>
