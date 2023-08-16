@@ -6,11 +6,13 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
+  DialogTrigger
 } from '@/components/dialog'
 import { typographies } from '@/components/typography'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { cn } from '@/lib/utils'
+import { OrderItemForm } from './order-item'
 
 export function OpenTabs() {
   const openTables = useLoaderData() as Tables
@@ -33,7 +35,7 @@ export function OpenTabs() {
           <PlusIcon /> <span className="hidden md:block">Nova comanda</span>
         </Button>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]  gap-3">
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))]  gap-3">
         {openTables.map((table) => (
           <div
             className="flex flex-col gap-2 rounded-xl border bg-card p-4 text-card-foreground shadow"
@@ -50,6 +52,20 @@ export function OpenTabs() {
             <p className={typographies({ as: 'h4' })}>Comandas: </p>
             {table.tabs.map((tab) => (
               <p className={typographies({ as: 'lead' })} key={tab.name}>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size="sm" className="mr-2">
+                      <PlusIcon />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Novo item</DialogTitle>
+                    </DialogHeader>
+
+                    <OrderItemForm tabId={tab.id} />
+                  </DialogContent>
+                </Dialog>
                 <Link
                   to={`/tab/${table.number}/${tab.id}`}
                   className="text-blue-700 underline hover:text-blue-600"
