@@ -14,8 +14,8 @@ import { OpenTab } from './features/tab/open-tab'
 import { getWaiters } from './features/tab/api/get-waiter'
 import { getMenuCategories } from './features/menu/api/get-categories'
 import { ErrorPage } from './components/error-page'
-import { getItemsToPrepare } from './features/kitchen/api/getItemsToPrepare'
 import { Kitchen } from './features/kitchen/kitchen'
+import { getItemsToPrepare } from './features/kitchen/api/get-items-to-prepare'
 
 const restaurant = 'lamercan'
 const container = document.getElementById('root') as HTMLDivElement
