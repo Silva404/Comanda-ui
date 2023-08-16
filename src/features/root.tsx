@@ -1,27 +1,43 @@
-import { Spinner } from '@/components/spinner'
 import { Toaster } from '@/components/toast'
 import { cn } from '@/lib/utils'
-import { Suspense } from 'react'
-import { Link, Outlet, useNavigation } from 'react-router-dom'
+import { NavLink, Outlet, useNavigation } from 'react-router-dom'
 
 function Header() {
   return (
-    <div className="flex items-center gap-6 bg-[#343a40] p-4">
-      <Link to="/" className="text-2xl font-semibold tracking-tight text-white">
+    <div className="flex items-center gap-3 bg-[#343a40] p-3">
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          cn(
+            'text-2xl font-semibold tracking-tight text-white transition-all',
+            isActive ? '' : 'opacity-90'
+          )
+        }
+      >
         Comanda Fácil
-      </Link>
-      <Link
+      </NavLink>
+      <NavLink
         to="/kitchen"
-        className="cursor-pointer  scroll-m-20 text-base font-semibold tracking-tight text-white/75 hover:text-white/90"
+        className={({ isActive }) =>
+          cn(
+            'cursor-pointer rounded px-2 py-1 text-base font-semibold tracking-tight text-white/75 transition-all hover:text-white/90',
+            isActive ? 'bg-gray-600' : 'bg-transparent'
+          )
+        }
       >
         Cozinha
-      </Link>{' '}
-      <Link
+      </NavLink>{' '}
+      <NavLink
         to="/menu"
-        className="cursor-pointer  scroll-m-20 text-base font-semibold tracking-tight text-white/75 hover:text-white/90"
+        className={({ isActive }) =>
+          cn(
+            'cursor-pointer rounded px-2 py-1 text-base font-semibold tracking-tight text-white/75 transition-all hover:text-white/90',
+            isActive ? 'bg-gray-600' : 'bg-transparent'
+          )
+        }
       >
         Cardapio
-      </Link>
+      </NavLink>
     </div>
   )
 }
