@@ -60,13 +60,14 @@ const router = reactRouterDom.createBrowserRouter([
   }
 ])
 
-if (process.env.NODE_ENV === 'development') {
-  const { worker } = await import('./tests/mocks/browser')
-  worker.start()
-}
-
-root.render(
-  <QueryClientProvider client={queryClient}>
-    <reactRouterDom.RouterProvider router={router} />
-  </QueryClientProvider>
-)
+import('./tests/mocks/browser')
+  .then(({ worker }) => {
+    worker.start()
+  })
+  .then(() =>
+    root.render(
+      <QueryClientProvider client={queryClient}>
+        <reactRouterDom.RouterProvider router={router} />
+      </QueryClientProvider>
+    )
+  )
